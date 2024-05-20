@@ -94,13 +94,11 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
-
     "django_cleanup.apps.CleanupConfig"
 ]
 
-# LOCAL_APPS = ["apps.a_posts"]
 LOCAL_APPS = [
-
+    "apps.users"
 ]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -122,7 +120,7 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
-# AUTH_USER_MODEL = "users.User"
+AUTH_USER_MODEL = "users.User"
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
 # LOGIN_REDIRECT_URL = "/"
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-url
