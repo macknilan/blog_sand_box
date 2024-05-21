@@ -1,0 +1,16 @@
+{% extends "layouts/layout_a.html" %}
+{% load static i18n %}
+
+
+{% block content_layout %}
+
+    <div>
+        ARCHIVO POSTS/BASE.HTML
+    </div>
+    {% for post in posts %}
+        <!--  -->
+        {% include "posts/post.html" %}
+        <!--/  -->
+    {% endfor %}
+
+{% endblock content_layout %}

@@ -1,0 +1,7 @@
+{% load static i18n %}
+
+    <p>{{ post.title|truncatechars:25 }}</p>
+    <p>{{ post.body }}</p>
+    <figure>
+        <img src="{{ post.image.url }}" alt="{{ post.title }}">
+    </figure>

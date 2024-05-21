@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block base %}
+
+    <!-- HERO -->
+    <div>
+        SECCIÓN HERO
+    </div>
+    <!-- /HERO -->
+
+    <div class="container mx-auto mt-4 flex max-w-5xl flex-wrap justify-around">
+        <section>
+            {% block content_layout %}
+                <!-- posts/home.html -->
+            {% endblock content_layout %}
+        </section>
+    </div>
+
+{% endblock base %}

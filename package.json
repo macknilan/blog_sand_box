@@ -1,0 +1,26 @@
+{
+  "name": "blog_sand_box",
+  "version": "0.1.0",
+  "description": "Sand box blog",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "tailwindcss -i ./apps/static/src/input.css -o ./apps/static/src/output.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/macknilan/blog_sand_box.git"
+  },
+  "author": "rodo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/macknilan/blog_sand_box/issues"
+  },
+  "homepage": "https://github.com/macknilan/blog_sand_box#readme",
+  "devDependencies": {
+    "tailwindcss": "^3.4.3"
+  },
+  "dependencies": {
+    "flowbite": "^2.3.0"
+  }
+}
