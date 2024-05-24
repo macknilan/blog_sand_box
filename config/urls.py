@@ -12,6 +12,7 @@ urlpatterns = (
     [
         path("", home_view, name="home"),
         path(settings.ADMIN_URL, admin.site.urls),
+        path("posts/", include("apps.posts.urls", namespace="posts")),
         # path('admin/', admin.site.urls),
     ]
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

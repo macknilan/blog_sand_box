@@ -3,11 +3,7 @@
 from django.contrib import admin
 
 # Models
-from apps.posts.models import (
-    Post,
-    Tag,
-    LikedPost
-)
+from apps.posts.models import LikedPost, Post, Tag
 
 
 @admin.register(Post)
@@ -17,7 +13,7 @@ class PostAdmin(admin.ModelAdmin):
     list_display = [
         "id",
         "title",
-        "body",
+        "short_body",
         "image",
         "is_draft",
         "url",
@@ -38,6 +34,11 @@ class PostAdmin(admin.ModelAdmin):
     list_editable = [
         "is_draft",
     ]
+
+    def short_body(self, obj):
+        """RETURN THE FIRST 50 WORDS OF THE BODY FIELD."""
+        words = obj.body.split()[:15]
+        return ' '.join(words) + '...' if len(words) > 15 else ' '.join(words)
 
 
 @admin.register(Tag)

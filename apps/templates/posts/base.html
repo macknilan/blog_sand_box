@@ -3,11 +3,17 @@
 
 
 {% block content_layout %}
-
-    {% for post in posts %}
-        <!--  -->
-        {% include "posts/post.html" %}
-        <!--/  -->
-    {% endfor %}
-
+    <section>
+        {% if posts %}
+            <h1 class="text-2xl subpixel-antialiased text-mint-500 mt-1.5 mb-3.5">
+                Blog Posts
+            </h1>
+            <p class="my-3 text-base subpixel-antialiased text-silver-300 text-pretty">
+                Esta es una lista de mis publicaciones/artículos de blog recientes.
+            </p>
+        {% endif %}
+        {% for post in posts %}
+            {% include "posts/post.html" %}
+        {% endfor %}
+    </section>
 {% endblock content_layout %}

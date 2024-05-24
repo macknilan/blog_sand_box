@@ -23,3 +23,4 @@ django-cleanup==8.1.0 # https://github.com/un1t/django-cleanup
 # ------------------------------------------------------------------------------
 beautifulsoup4==4.12.2  # https://www.crummy.com/software/BeautifulSoup/
 requests==2.31.0  # https://github.com/psf/requests - https://requests.readthedocs.io/en/latest/
+markdown==3.6  # https://github.com/Python-Markdown/markdown

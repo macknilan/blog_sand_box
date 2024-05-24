@@ -26,7 +26,7 @@ class Post(TimeStampedModel):
     """Post model."""
 
     title = models.CharField(_("title"), max_length=255)
-    body = models.TextField(max_length=500)
+    body = models.TextField()
     image = models.ImageField(_("post_image"), upload_to="post_image/", max_length=500, blank=True, null=True)
     is_draft = models.BooleanField(_("is_draft"), default=False)
     publish_date = models.DateTimeField(_("published_date"), auto_now=False, auto_now_add=False, null=True, blank=True)

@@ -6,6 +6,7 @@ https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 """
 
 from pathlib import Path
+
 import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -283,3 +284,5 @@ COMPRESS_ENABLED = True
 
 # Your stuff...
 # TODO:
+
+

@@ -21,6 +21,7 @@
 
     {% compress css %}
         <link rel="stylesheet" href="{% static "src/output.css" %}">
+        <link rel="stylesheet" href="{% static "src/my_css.css" %}">
     {% endcompress %}
 
 </head>
@@ -34,13 +35,13 @@
     <main class="container mx-auto m-2.5 p-2.5">
         {% block base %}
             <!--  -->
-            <!--  -->
-            <!--  -->
         {% endblock base %}
     </main>
 
 
-
+    <footer class="fixed bottom-0 w-full">
+        {% include "includes/footer.html" %}
+    </footer>
 
 </body>
 

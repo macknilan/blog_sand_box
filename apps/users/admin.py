@@ -32,9 +32,15 @@ class UserAdmin(auth_admin.UserAdmin):
     list_display = [
         "id",
         "username",
+        "first_name",
+        "last_name",
         "email",
         "created_at",
         "updated_at"
+    ]
+    list_display_links = [
+        "id",
+        "username"
     ]
     search_fields = ["username", "email"]
 
