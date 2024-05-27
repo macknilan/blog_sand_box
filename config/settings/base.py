@@ -95,7 +95,7 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
-    "django_cleanup.apps.CleanupConfig"
+    "django_cleanup.apps.CleanupConfig",
 ]
 
 LOCAL_APPS = [

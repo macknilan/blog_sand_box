@@ -1,6 +1,9 @@
 """ MODEL POST FOR THE BLOG """
 import uuid
+import string
+import secrets
 
+from nanoid import generate
 from django.conf import settings
 from django.db import models
 from django.utils import timezone
@@ -22,15 +25,36 @@ class PostLet(models.Manager):
         return super().get_queryset().filter(publish_date__lte=now)
 
 
+def unique_slugify(instance, string_to_slugify):
+    slug_value = slugify(string_to_slugify)
+    model = instance.__class__
+
+    alphabet = "".join(secrets.choice(string.ascii_letters + string.digits + "-_") for i in range(21))
+
+    slug_value = slug_value + generate(alphabet, size=21)
+
+    if model.objects.filter(url=slug_value).exists():
+        slug_value = unique_slugify(instance,  slug_value)
+    return slug_value
+
+
 class Post(TimeStampedModel):
     """Post model."""
 
+    id = models.UUIDField(
+        _("id"),
+        default=uuid.uuid4,
+        db_column="post_id",
+        editable=False,
+        primary_key=True,
+        unique=True,
+    )
     title = models.CharField(_("title"), max_length=255)
     body = models.TextField()
     image = models.ImageField(_("post_image"), upload_to="post_image/", max_length=500, blank=True, null=True)
     is_draft = models.BooleanField(_("is_draft"), default=False)
     publish_date = models.DateTimeField(_("published_date"), auto_now=False, auto_now_add=False, null=True, blank=True)
-    url = models.SlugField(_("url"), max_length=255, null=True, blank=True)  # unique=True
+    url = models.SlugField(_("url slug"), max_length=255, null=True, blank=True, unique=True)  # unique=True
     link = models.URLField(_("link"), max_length=500, null=True, blank=True)
     tags = models.ManyToManyField(Tag, verbose_name=_("tags for the post"))
     objects = models.Manager()  # The default manager
@@ -63,7 +87,9 @@ class Post(TimeStampedModel):
         return "{}".format(self.title)
 
     def save(self, *args, **kwargs):
-        self.url = slugify(self.title)
+        # self.url = slugify(self.title)
+        name_to_slugify = self.title
+        self.url = unique_slugify(self, name_to_slugify)
         super(Post, self).save(*args, **kwargs)
 
 

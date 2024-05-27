@@ -10,6 +10,9 @@ from apps.posts.models import LikedPost, Post, Tag
 class PostAdmin(admin.ModelAdmin):
     """PROFILE MODEL ADMIN"""
 
+    readonly_fields = [
+        "url"
+    ]
     list_display = [
         "id",
         "title",

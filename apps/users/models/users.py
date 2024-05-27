@@ -1,4 +1,5 @@
 """User model."""
+import uuid
 
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
@@ -22,6 +23,14 @@ class User(TimeStampedModel, AbstractUser):
     false until it is verified by mail, in development it is shown
     in console-log(cli) and in production you have to send an email.
     """
+    id = models.UUIDField(
+        _("id"),
+        default=uuid.uuid4,
+        db_column="user_id",
+        editable=False,
+        primary_key=True,
+        unique=True,
+    )
 
     email = models.EmailField(
         _("email address"),
