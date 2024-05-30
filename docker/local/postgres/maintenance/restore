@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+working_dir="$(dirname ${0})"
+
+source "${working_dir}/_sourced/constants.sh"
+source "${working_dir}/_sourced/messages.sh"
+
+# Verifica si se ha establecido el primer argumento del script.
+# La expresión '${1+x}' sustituirá 'x' si se ha establecido el primer argumento, y nada si no se ha establecido.
+# Por lo tanto, '-z ${1+x}' será verdadero si no se ha establecido el primer argumento.
+# Si no se ha establecido el primer argumento, se muestra un mensaje de error y el script finaliza con un estado de 1.
+if [[ -z ${1+x} ]]; then
+  message_error "El nombre del archivo del respaldo no está especificado aún es un parámetro requerido. Asegúrate de proporcionar uno e intenta de nuevo."
+  exit 1
+fi
+
+backup_filename="${BACKUP_DIR_PATH}/${1}"
+
+# Verifica si el archivo especificado por "${backup_filename}" existe.
+# La opción '-f' para el comando de prueba ('[') verifica si un archivo existe y es un archivo regular.
+# Si el archivo no existe, se muestra un mensaje de error y el script finaliza con un estado de 1.
+if [[ ! -f "${backup_filename}" ]]; then
+  message_error "No hay ningún respaldo con el nombre de archivo especificado. Revisar la salida del script de mantenimiento 'backups' para ver si hay uno y vuelve a intentarlo."
+  exit 1
+fi
+
+message_welcome "Restaurando la base de datos '${POSTGRES_DB}' de el archivo '${backup_filename}' de respaldo ..."
+
+if [[ "${POSTGRES_USER}" == "postgres" ]]; then
+  message_error "Restaurar como usuario 'postgres' no está permitido. Asigna 'POSTGRES_USER' con otro y vuelve a intentarlo."
+  exit 1
+fi
+
+export PGHOST="${POSTGRES_HOST}"
+export PGPORT="${POSTGRES_PORT}"
+export PGUSER="${POSTGRES_USER}"
+export PGPASSWORD="${POSTGRES_PASSWORD}"
+export PGDATABASE="${POSTGRES_DB}"
+
+message_info "Eliminación de la base de datos..."
+
+dropdb "${PGDATABASE}"
+
+message_info "Creando la base de datos..."
+
+createdb --owner="${POSTGRES_USER}"
+
+message_info "Applying the backup to the new database..."
+message_info "Restaurando la la información del respaldo en la nueva base de datos..."
+
+# Utiliza el comando 'gunzip' con la opción '-c' para descomprimir el archivo de respaldo especificado por "${backup_filename}" a la salida estándar.
+# La salida se canaliza ('|') al comando 'psql', que ejecuta comandos SQL leídos desde la entrada estándar contra la base de datos PostgreSQL especificada por "${POSTGRES_DB}".
+# Por lo tanto, esta línea de código es responsable de restaurar la base de datos a partir del archivo de respaldo.
+gunzip -c "${backup_filename}" | psql "${POSTGRES_DB}"
+
+message_success "La '${POSTGRES_DB}' a sido restaurada exitosamente del respaldo '${backup_filename}' en la base de datos ..."
