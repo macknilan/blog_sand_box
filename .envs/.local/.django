@@ -1,0 +1,27 @@
+# General
+# ------------------------------------------------------------------------------
+DJANGO_DEBUG=True
+DJANGO_READ_DOT_ENV_FILE=True
+DJANGO_SECRET_KEY=django-insecure-0iw66+8hx33l7cr-d!u9g_np85w3n$+&s89dhnzosopxdzh=x*
+DJANGO_EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend
+
+# USE_DOCKER=yes
+# IPYTHONDIR=/app/.ipython
+# DJANGO_SETTINGS_MODULE=config.settings.local
+
+# Redis
+# ------------------------------------------------------------------------------
+# REDIS_URL=redis://redis:6379/0
+
+# Celery
+# ------------------------------------------------------------------------------
+# CELERY_BROKER_URL=redis://redis:6379/0
+# CELERY_RESULT_BACKEND=redis://redis:6379/0
+
+# DOMAIN=locahost:8080
+
+# Flower
+# ------------------------------------------------------------------------------
+# CELERY_FLOWER_USER=lAVjhqVxJxmVNKPfdlZXPKphlwymupnF
+# CELERY_FLOWER_PASSWORD=NHxZTuk42aEHsFExX8HOXlJDFtOCdqljy1tdCzOUM2OmNQqEHTq686SUAOzDSEHI
+

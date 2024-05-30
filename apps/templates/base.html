@@ -1,48 +1,42 @@
 {% load static i18n compress %}
-
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Tienda de la Esquina"/>
-    <meta name="author" content="Rodolfo"/>
-
-    <title>{% block title %}Django + Tailwind CSS + Flowbite{% endblock title %}</title>
-    <link rel="shortcut icon" type="image/png" href="{% static "images/favicons/goomba_super_mario_bros_icon.svg" %}">
-    <script defer src="https://kit.fontawesome.com/6f83d1d3e1.js" crossorigin="anonymous"></script>
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
-    <script defer src="https://unpkg.com/hyperscript.org@0.9.12"></script>
-
-    <!-- My stuff: Third-party javascript libraries go here -->
-    <script defer src="{% static "js/myjs.js" %}"></script>
-
-    {% compress css %}
-        <link rel="stylesheet" href="{% static "src/output.css" %}">
-        <link rel="stylesheet" href="{% static "src/my_css.css" %}">
-    {% endcompress %}
-
-</head>
-
-<body class="bg-base-content-950">
-
-    <header class="sticky top-0">
-        {% include "includes/navbar.html" %}
-    </header>
-
-    <main class="container mx-auto m-2.5 p-2.5">
-        {% block base %}
-            <!--  -->
-        {% endblock base %}
-    </main>
-
-
-    <footer class="fixed bottom-0 w-full">
-        {% include "includes/footer.html" %}
-    </footer>
-
-</body>
-
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Tienda de la Esquina" />
+        <meta name="author" content="Rodolfo" />
+        <title>
+            {% block title %}
+                Django + Tailwind CSS + Flowbite
+            {% endblock title %}
+        </title>
+        <link rel="shortcut icon" type="image/png" href="{% static "images/favicons/goomba_super_mario_bros_icon.svg" %}">
+        <script defer
+                src="https://kit.fontawesome.com/6f83d1d3e1.js"
+                crossorigin="anonymous"></script>
+        <script defer
+                src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+        <script defer src="https://unpkg.com/hyperscript.org@0.9.12"></script>
+        <!-- My stuff: Third-party javascript libraries go here -->
+        <script defer src="{% static "js/myjs.js" %}"></script>
+        {% compress css %}
+            <link rel="stylesheet" href="{% static "src/output.css" %}">
+            <link rel="stylesheet" href="{% static "src/my_css.css" %}">
+        {% endcompress %}
+    </head>
+    <body class="bg-base-content-950">
+        <header class="sticky top-0">
+            {% include "includes/navbar.html" %}
+        </header>
+        <main class="container mx-auto m-2.5 p-2.5">
+            {% block base %}
+                <!--  -->
+            {% endblock base %}
+        </main>
+        <footer class="fixed bottom-0 w-full">
+            {% include "includes/footer.html" %}
+        </footer>
+    </body>
 </html>

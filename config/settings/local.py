@@ -8,7 +8,7 @@ DEBUG = env.bool("DJANGO_DEBUG")
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 SECRET_KEY = env(
     "DJANGO_SECRET_KEY",
-    default="ytky5H21xAeWadLvfj3btP6TskHTmg9YOT3higHHdOTGLXEGDAbgGBOI1JVEvAGE",
+    default="r71wxFKM9xnMVl3xW3ZfOsg85S1_yDPuZrS9hdDqlBPtlvCzCMw",
 )
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1"]
@@ -62,5 +62,9 @@ INSTALLED_APPS += ["django_extensions"]  # noqa: F405
 # CELERY_TASK_ALWAYS_EAGER = True
 # https://docs.celeryq.dev/en/stable/userguide/configuration.html#task-eager-propagates
 # CELERY_TASK_EAGER_PROPAGATES = True
+
 # Your stuff...
 # ------------------------------------------------------------------------------
+# CORS NGINX
+CSRF_TRUSTED_ORIGINS = ["http://localhost:8080"]
+

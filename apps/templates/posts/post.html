@@ -1,12 +1,9 @@
 {% load static i18n %}
-
-
 <div class="my-5 flex flex-col md:my-2.5 md:flex-row md:gap-4">
     <p class="text-base subpixel-antialiased text-dim-gray-500">{{ post.created_at|date:"M j, Y" }}</p>
-    <a href="{% url "posts:post-detail" post.url %}" title="{{ post.url }}"
+    <a href="{% url "posts:post-detail" post.url %}"
+       title="{{ post.url }}"
        class="text-base underline underline-offset-4 subpixel-antialiased text-silver-300 text-pretty">
         {{ post.title }}
     </a>
 </div>
-
-

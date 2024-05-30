@@ -1,0 +1,7 @@
+# PostgreSQL
+# ------------------------------------------------------------------------------
+POSTGRES_HOST=127.0.0.1
+POSTGRES_PORT=5432
+POSTGRES_DB=blog_sand_box_db
+POSTGRES_USER=blog_sand_box_usr
+POSTGRES_PASSWORD=Sand box usr 2024 pass
