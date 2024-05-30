@@ -56,16 +56,18 @@ LOCALE_PATHS = [str(BASE_DIR / "locale")]
 # DATABASES
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": env("POSTGRES_DB"),
-        "USER": env("POSTGRES_USER"),
-        "PASSWORD": env("POSTGRES_PASSWORD"),
-        "HOST": env("POSTGRES_HOST"),
-        "PORT": env("POSTGRES_PORT")
-    }
-}
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": env("POSTGRES_DB"),
+#         "USER": env("POSTGRES_USER"),
+#         "PASSWORD": env("POSTGRES_PASSWORD"),
+#         "HOST": env("POSTGRES_HOST"),
+#         "PORT": env("POSTGRES_PORT")
+#     }
+# }
+
+DATABASES = {"default": env.db("DATABASE_URL")}
 
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 

@@ -18,7 +18,7 @@ services:
             - ./.envs/.local/.postgres
         depends_on:
             - postgres
-            - mailpit
+            # - mailpit
         command: /start
         networks:
             - blog_network
@@ -37,11 +37,11 @@ services:
         networks:
             - blog_network
 
-    mailpit:
-        image: docker.io/axllent/mailpit:latest
-        container_name: my_awesome_project_local_mailpit
-        ports:
-          - "8025:8025"
+#    mailpit:
+#        image: docker.io/axllent/mailpit:latest
+#        container_name: my_awesome_project_local_mailpit
+#        ports:
+#          - "8025:8025"
 
 networks:
     blog_network:
