@@ -11,8 +11,8 @@ services:
             - .:/app:z
             - static_volume:/app/staticfiles
             - media_volume:/app/mediafiles
-        ports:
-            - "8000:8000"
+        expose:
+            - "8000"
         env_file:
             - ./.envs/.local/.django
             - ./.envs/.local/.postgres
@@ -36,6 +36,23 @@ services:
             - ./.envs/.local/.postgres
         networks:
             - blog_network
+
+    nginx:
+        build:
+            context: ./docker/local/nginx
+            dockerfile: Dockerfile
+        image: django_blog_nginx
+        container_name: django_blog_nginx
+        depends_on:
+            - django
+        volumes:
+            - static_volume:/app/staticfiles
+            - media_volume:/app/mediafiles
+        ports:
+            - "8080:80"
+        networks:
+            - blog_network
+        restart: always
 
 #    mailpit:
 #        image: docker.io/axllent/mailpit:latest
