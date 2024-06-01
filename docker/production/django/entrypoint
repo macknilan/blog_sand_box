@@ -1,0 +1,57 @@
+#!/bin/bash
+
+# Esta opción hace que el shell salga si cualquier comando invocado falla.
+set -o errexit
+# Esta opción hace que una tubería devuelva el estado de salida del último comando en la tubería que salió con un estado distinto de cero.
+set -o pipefail
+# Esta opción hace que el shell trate las variables y parámetros no establecidos como un error al sustituir.
+set -o nounset
+
+# REVISA SI LA VARIABLE DE ENTORNO POSTGRES_USER ESTÁ DEFINIDA
+# SI NO ESTA DEFINIDA LA VARIABLE DE ENTORNO POSTGRES_USER SE DEFINE CON EL VALOR POR DEFECTO
+if [ -z "${POSTGRES_USER}" ]; then
+  # Define the default username for the PostgreSQL database.
+  base_postgres_image_default_user='postgres'
+
+  # Export the POSTGRES_USER environment variable with the default username.
+  # This makes the variable available to subprocesses.
+  export POSTGRES_USER="${base_postgres_image_default_user}"
+fi
+
+# Establece la variable de entorno DATABASE_URL con la cadena de conexión a la base de datos PostgreSQL.
+# La cadena de conexión se compone de la siguiente manera:
+# - "postgres://": Es el esquema que indica que se va a utilizar el protocolo de PostgreSQL.
+# - "${POSTGRES_USER}": Es el nombre de usuario para acceder a la base de datos PostgreSQL.
+# - "${POSTGRES_PASSWORD}": Es la contraseña del usuario para acceder a la base de datos PostgreSQL.
+# - "@${POSTGRES_HOST}": Es el host donde se encuentra la base de datos PostgreSQL.
+# - ":${POSTGRES_PORT}": Es el puerto en el que está escuchando la base de datos PostgreSQL.
+# - "/${POSTGRES_DB}": Es el nombre de la base de datos PostgreSQL a la que se va a conectar.
+export DATABASE_URL="postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DB}"
+
+# SE EJECUTA UN SCRIPT DE PYTHON PARA VERIFICAR SI LA BASE DE DATOS POSTGRESQL ESTÁ DISPONIBLE.
+python << END
+import sys
+import time
+import psycopg
+suggest_unrecoverable_after = 30
+start = time.time()
+while True:
+  try:
+    psycopg.connect(
+      dbname="${POSTGRES_DB}",
+      user="${POSTGRES_USER}",
+      password="${POSTGRES_PASSWORD}",
+      host="${POSTGRES_HOST}",
+      port="${POSTGRES_PORT}",
+    )
+    break
+  except psycopg.OperationalError as error:
+    sys.stderr.write("EN ESPERA DE PostgreSQL SE ENCUENTRE DISPONIBLE...\n")
+    if time.time() - start > suggest_unrecoverable_after:
+      sys.stderr.write("SE ESTA TOMANDO MÁS TIEMPO DE LO ESPERADO. LA SIGUIENTE EXCEPCIÓN PUEDE SER INDICATIVA DE UN ERROR IRRECUPERABLE: '{}'\n".format(error))
+  time.sleep(1)
+END
+
+>&2 echo "PostgreSQL is available"  # SE IMPRIME UN MENSAJE EN LA SALIDA DE ERROR ESTÁNDAR.
+
+exec "$@"  # SE EJECUTA EL COMANDO PASADO COMO ARGUMENTO AL SCRIPT DE ENTRADA.

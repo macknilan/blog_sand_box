@@ -1,0 +1,77 @@
+version: "3.9"
+
+services:
+    # EL SÍMBOLO '&' SE UTILIZA PARA CREAR UN ANCLA REUTILIZABLE CON EL NOMBRE 'django'.
+    # ESTA ANCLA SE PUEDE REFERENCIAR EN OTRO LUGAR DEL ARCHIVO YAML UTILIZANDO EL SÍMBOLO '*'.
+    django: &django
+        build:
+            context: .
+            dockerfile: ./docker/production/django/Dockerfile
+        image: django_blog
+        container_name: django_blog
+        volumes:
+            # - .:/app:z
+            - static_volume:/app/staticfiles
+            - media_volume:/app/mediafiles
+#        expose:
+#            - "8000"
+        env_file:
+            - ./.envs/.production/.django
+            - ./.envs/.production/.postgres
+        depends_on:
+            - postgres
+            # - mailpit
+        command: /start
+        networks:
+            - reverse_proxy_net
+
+    postgres: &postgres
+        build:
+            context: .
+            dockerfile: ./docker/production/postgres/Dockerfile
+        image: django_blog_production_postgres
+        container_name: django_blog_production_postgres
+        volumes:
+            - production_postgres_data:/var/lib/postgresql/data
+            - production_postgres_data_backups:/backups
+        env_file:
+            - ./.envs/.production/.postgres
+        networks:
+            - reverse_proxy_net
+
+#    nginx:
+#        build:
+#            context: ./docker/local/nginx
+#            dockerfile: Dockerfile
+#        image: django_blog_nginx
+#        container_name: django_blog_nginx
+#        depends_on:
+#            - django
+#        volumes:
+#            - static_volume:/app/staticfiles
+#            - media_volume:/app/mediafiles
+#        ports:
+#            - "8080:80"
+#        networks:
+#            - reverse_proxy_net
+#        restart: always
+
+#    mailpit:
+#        image: docker.io/axllent/mailpit:latest
+#        container_name: my_awesome_project_local_mailpit
+#        ports:
+#          - "8025:8025"
+
+networks:
+    reverse_proxy_net:
+        # La clave 'external' se utiliza para especificar que esta red ha sido creada fuera de este
+        # archivo Docker Compose. Establecer esto en 'true' significa que Docker Compose espera que la red
+        # ya exista, y no intentará crearla. Si la red no existe,
+        # Docker Compose devolverá un error.
+        external: true
+
+volumes:
+    static_volume:
+    media_volume:
+    production_postgres_data: {}
+    production_postgres_data_backups: {}

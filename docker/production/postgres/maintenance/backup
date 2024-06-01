@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+set -o errexit
+set -o nounset
+set -o pipefail
+
+# OBTÉN EL NOMBRE DEL DIRECTORIO DEL SCRIPT QUE SE EJECUTÓ. ESTO ES ÚTIL PARA LOS SCRIPTS QUE NECESITAN OPERAR EN ARCHIVOS RELATIVOS A SU PROPIA UBICACIÓN.
+working_dir="$(dirname ${0})"
+
+# LEE Y EJECUTA COMANDOS DEL ARCHIVO 'constants.sh' DEL DIRECTORIO '_sourced'. ESTE ARCHIVO CONTIENE VALORES CONSTANTES QUE SE UTILIZAN EN ESTE SCRIPT.
+source "${working_dir}/_sourced/constants.sh"
+
+# LEE Y EJECUTA COMANDOS DEL ARCHIVO 'messages.sh' DEL DIRECTORIO '_sourced'. ESTE ARCHIVO CONTIENE FUNCIONES PARA MOSTRAR MENSAJES AL USUARIO.
+source "${working_dir}/_sourced/messages.sh"
+
+# MUESTRA UN MENSAJE DE BIENVENIDA AL USUARIO, INDICANDO QUE LA BASE DE DATOS '${POSTGRES_DB}' SE ESTÁ RESPALDANDO.
+message_welcome "Respaldo de seguridad de la base de datos '${POSTGRES_DB}'..."
+
+if [[ "${POSTGRES_USER}" == "postgres" ]]; then
+  message_error "La copia de seguridad como usuario 'postgres' no esta permitido. Asigna la variable de ambiente 'POSTGRES_USER' con otro valor e intenta de nuevo."
+  exit 1
+fi
+
+export PGHOST="${POSTGRES_HOST}"
+export PGPORT="${POSTGRES_PORT}"
+export PGUSER="${POSTGRES_USER}"
+export PGPASSWORD="${POSTGRES_PASSWORD}"
+export PGDATABASE="${POSTGRES_DB}"
+
+
+backup_filename="${BACKUP_FILE_PREFIX}_$(date +'%Y_%m_%dT%H_%M_%S').sql.gz"
+
+# Utiliza el comando 'pg_dump' para crear un volcado de la base de datos PostgreSQL actual.
+# El comando 'pg_dump' es una utilidad para hacer copias de seguridad de una base de datos PostgreSQL. Realiza copias de seguridad consistentes incluso si la base de datos se está utilizando de manera concurrente.
+# La salida de 'pg_dump' se canaliza al comando 'gzip', que comprime la salida.
+# El operador '>' se utiliza para redirigir la salida comprimida a un archivo.
+# La ruta y el nombre del archivo es "${BACKUP_DIR_PATH}/${backup_filename}", donde:
+# - "${BACKUP_DIR_PATH}" es el directorio donde se almacenará el archivo de copia de seguridad, y
+# - "${backup_filename}" es el nombre del archivo de copia de seguridad, que incluye una marca de tiempo y la extensión '.sql.gz' que indica que es un archivo SQL comprimido.
+pg_dump | gzip > "${BACKUP_DIR_PATH}/${backup_filename}"
+
+message_success "'${POSTGRES_DB}' copia de seguridad de la base de datos '${backup_filename}' a sido creada exitosamente y esta en '${BACKUP_DIR_PATH}'"
