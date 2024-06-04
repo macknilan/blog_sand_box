@@ -27,7 +27,7 @@ DATABASES = {"default": env.db("DATABASE_URL")}
 # which is then used by Django to determine whether a request is secure or not.
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
-SECURE_SSL_REDIRECT = env.bool("DJANGO_SECURE_SSL_REDIRECT", defatult=True)
+SECURE_SSL_REDIRECT = env.bool("DJANGO_SECURE_SSL_REDIRECT", default=True)
 
 SESSION_COOKIE_SECURE = True
 
