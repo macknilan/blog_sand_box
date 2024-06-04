@@ -72,8 +72,8 @@ cover/
 *.mo
 
 # Django stuff:
-**/migrations/**
-!**/migrations/__init__.py
+# **/migrations/**
+# !**/migrations/__init__.py
 **/staticfiles/**
 
 # Flask stuff:
