@@ -9,7 +9,8 @@ from django.db import models
 from django.utils import timezone
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
-from martor.models import MartorField
+
+from tinymce.models import HTMLField
 
 # Utilities
 from apps.utils.models import TimeStampedModel
@@ -55,7 +56,7 @@ class Post(TimeStampedModel):
     )
     title = models.CharField(_("title"), max_length=255)
     # body = models.TextField()
-    body = MartorField()
+    body = HTMLField()
     image = models.ImageField(_("post_image"), upload_to="post_image/", max_length=500, blank=True, null=True)
     is_draft = models.BooleanField(_("is_draft"), default=False)
     publish_date = models.DateTimeField(_("published_date"), auto_now=False, auto_now_add=False, null=True, blank=True)

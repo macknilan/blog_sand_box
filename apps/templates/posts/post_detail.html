@@ -2,7 +2,6 @@
 {% load static i18n %}
 
 {% load markdown_extras %}
-{% load martortags %}
 
 {% block content_layout %}
     <h1 class="text-2xl subpixel-antialiased text-mint-500 mt-1.5 mb-3.5">{{ post.title }}</h1>
@@ -11,8 +10,8 @@
         <span class="invisible h-0 ms:h-4 sm:visible">&nbsp;|&nbsp;</span>
         <p>
             <i class="fa-solid fa-tag" style="color: #cccccc;"></i>
-            {% for tag in post.tags.all %}#{{ tag }}{% endfor %}
+            {% for tag in post.tags.all %}#{{ tag }}&nbsp;{% endfor %}
         </p>
     </div>
-    <article class="max-w-none prose prose-my_color text-pretty">{{ post.body|safe_markdown }}</article>
+    <article class="max-w-none prose prose-my_color text-pretty">{{ post.body | safe }}</article>
 {% endblock content_layout %}

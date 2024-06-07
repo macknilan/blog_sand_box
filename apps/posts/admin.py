@@ -3,8 +3,6 @@
 from django.db import models
 from django.contrib import admin
 
-from martor.widgets import AdminMartorWidget
-
 # Models
 from apps.posts.models import LikedPost, Post, Tag
 
@@ -40,10 +38,6 @@ class PostAdmin(admin.ModelAdmin):
     list_editable = [
         "is_draft",
     ]
-
-    formfield_overrides = {
-        models.TextField: {'widget': AdminMartorWidget},
-    }
 
     def short_body(self, obj):
         """RETURN THE FIRST 50 WORDS OF THE BODY FIELD."""
