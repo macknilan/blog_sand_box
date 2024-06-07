@@ -1,11 +1,14 @@
 build:
 	docker compose -f local.yml up --build -d --remove-orphans
 
+buil:
+	docker compose -f local.yml up --build --remove-orphans
+
 up:
 	docker compose -f local.yml up
 
 ps:
-	docker compose -f local.yml ps
+	docker compose -f local.yml ps -a
 
 upd:
 	docker compose -f local.yml up -d
@@ -13,14 +16,23 @@ upd:
 down:
 	docker compose -f local.yml down
 
+show-stop-dj:
+	docker compose -f local.yml stop django
+
+show-start-dj:
+	docker compose -f local.yml start django
+
 show-logs:
 	docker compose -f local.yml logs
 
 show-logs-django:
-	docker compose -f local.yml logs --tail=100 -f django
+	docker compose -f local.yml logs --tail=200 -f django
 
 show-logs-postgres:
-	docker compose -f local.yml logs --tail=100 -f postgres
+	docker compose -f local.yml logs --tail=200 -f postgres
+
+show-logs-nginx:
+	docker compose -f local.yml logs --tail=200 -f nginx
 
 makemigrations:
 	docker compose -f local.yml run --rm django python manage.py makemigrations

@@ -98,6 +98,7 @@ DJANGO_APPS = [
 
 THIRD_PARTY_APPS = [
     "django_cleanup.apps.CleanupConfig",
+    "martor"
 ]
 
 LOCAL_APPS = [
@@ -289,7 +290,107 @@ COMPRESS_ENABLED = True
 # COMPRESS_ROOT = str(APPS_DIR / "static")
 
 
-# Your stuff...
-# TODO:
+# django-markdown-editor
+# https://github.com/agusmakmun/django-markdown-editor
+# ------------------------------------------------------------------------------
+# Choices are: "semantic", "bootstrap"
+# MARTOR_THEME = "bootstrap"
+
+MARTOR_ENABLE_CONFIGS = {
+    "emoji": "true",        # to enable/disable emoji icons.
+    "imgur": "false",        # to enable/disable imgur/custom uploader.
+    "mention": "false",     # to enable/disable mention
+    "jquery": "true",       # to include/revoke jquery (require for admin default django)
+    "living": "false",      # to enable/disable live updates in preview
+    "spellcheck": "false",  # to enable/disable spellcheck in form textareas
+    "hljs": "true",         # to enable/disable hljs highlighting in preview
+}
+
+MARTOR_TOOLBAR_BUTTONS = [
+    "bold", "italic", "horizontal", "heading", "pre-code",
+    "blockquote", "unordered-list", "ordered-list",
+    "link", "image-link", "image-upload", "emoji",
+    "direct-mention", "toggle-maximize", "help"
+]
+# TO SETUP THE MARTOR EDITOR WITH TITLE LABEL OR NOT (DEFAULT IS FALSE)
+MARTOR_ENABLE_LABEL = True
+# DISABLE ADMIN STYLE WHEN USING CUSTOM ADMIN INTERFACE e.g django-grappelli (default is true)
+MARTOR_ENABLE_ADMIN_CSS = True
+# MARKDOWNIFY
+MARTOR_MARKDOWNIFY_FUNCTION = "martor.utils.markdownify"
+MARTOR_MARKDOWNIFY_URL = "/martor/markdownify/"
+
+# DELAY IN MILLISECONDS TO UPDATE EDITOR PREVIEW WHEN IN LIVING MODE.
+MARTOR_MARKDOWNIFY_TIMEOUT = 1000
+
+# MARKDOWN EXTENSIONS (DEFAULT)
+MARTOR_MARKDOWN_EXTENSIONS = [
+    "markdown.extensions.extra",
+    "markdown.extensions.nl2br",
+    "markdown.extensions.smarty",
+    "markdown.extensions.fenced_code",
+    "markdown.extensions.sane_lists",
+    # "markdown.extensions.extra",
+    # "markdown.extensions.abbr",
+    # "markdown.extensions.attr_list",
+    # "markdown.extensions.def_list",
+    # "markdown.extensions.fenced_code",
+    # "markdown.extensions.footnotes",
+    # "markdown.extensions.md_in_html",
+    "markdown.extensions.tables",
+    # "markdown.extensions.admonition",
+    # "markdown.extensions.codehilite",
+    # "markdown.extensions.legacy_attrs",
+    # "markdown.extensions.legacy_em",
+    # "markdown.extensions.meta",
+    # "markdown.extensions.nl2br",
+    # "markdown.extensions.sane_lists",
+    # "markdown.extensions.smarty",
+    # "markdown.extensions.toc",
+
+    # CUSTOM MARKDOWN EXTENSIONS.
+    "martor.extensions.urlize",
+    "martor.extensions.del_ins",      # ~~strikethrough~~ and ++underscores++
+    "martor.extensions.mention",      # to parse markdown mention
+    "martor.extensions.emoji",        # to parse markdown emoji
+    "martor.extensions.mdx_video",    # to parse embed/iframe video
+    "martor.extensions.escape_html",  # to handle the XSS vulnerabilities
+]
+
+# MARKDOWN URLS
+MARTOR_UPLOAD_URL = "/martor/uploader/"
+MARTOR_SEARCH_USERS_URL = "/martor/search-user/"
+
+# MARKDOWN EXTENSIONS
+MARTOR_MARKDOWN_BASE_EMOJI_URL = "https://github.githubassets.com/images/icons/emoji/"
+
+# URL SCHEMES THAT ARE ALLOWED WITHIN LINKS
+ALLOWED_URL_SCHEMES = [
+    "file", "ftp", "ftps", "http", "https", "irc", "mailto",
+    "sftp", "ssh", "tel", "telnet", "tftp", "vnc", "xmpp",
+]
+
+# https://gist.github.com/mrmrs/7650266
+ALLOWED_HTML_TAGS = [
+    "a", "abbr", "b", "blockquote", "br", "cite", "code", "command",
+    "dd", "del", "dl", "dt", "em", "fieldset", "h1", "h2", "h3", "h4", "h5", "h6",
+    "hr", "i", "iframe", "img", "input", "ins", "kbd", "label", "legend",
+    "li", "ol", "optgroup", "option", "p", "pre", "small", "span", "strong",
+    "sub", "sup", "table", "tbody", "td", "tfoot", "th", "thead", "tr", "u", "ul"
+]
+
+# https://github.com/decal/werdlists/blob/master/html-words/html-attributes-list.txt
+ALLOWED_HTML_ATTRIBUTES = [
+    "alt", "class", "color", "colspan", "datetime",  # "data",
+    "height", "href", "id", "name", "reversed", "rowspan",
+    "scope", "src", "style", "title", "type", "width"
+]
+
+
+
+
+
+
+
 
 

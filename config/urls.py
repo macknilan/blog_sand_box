@@ -12,6 +12,7 @@ urlpatterns = (
     [
         path("", home_view, name="home"),
         path(settings.ADMIN_URL, admin.site.urls),
+        path("martor/", include("martor.urls")),
         path("posts/", include("apps.posts.urls", namespace="posts")),
         # path('admin/', admin.site.urls),
     ]

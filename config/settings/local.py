@@ -10,7 +10,7 @@ DEBUG = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 SECRET_KEY = env(
     "DJANGO_SECRET_KEY",
-    default="r71wxFKM9xnMVl3xW3ZfOsg85S1_yDPuZrS9hdDqlBPtlvCzCMw",
+    default="766bb5i26za+*7pav7v=bc5(4$tgm8b0y@ushp_1o$#fm)e8o^",
 )
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1"]
@@ -29,12 +29,13 @@ CACHES = {
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
 EMAIL_BACKEND = env("DJANGO_EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend")
+# https://docs.djangoproject.com/en/dev/ref/settings/#email-port
+EMAIL_PORT = 1025
 
 # WhiteNoise
 # ------------------------------------------------------------------------------
 # http://whitenoise.evans.io/en/latest/django.html#using-whitenoise-in-development
-INSTALLED_APPS = ["whitenoise.runserver_nostatic"] + INSTALLED_APPS  # noqa: F405
-
+INSTALLED_APPS = ["whitenoise.runserver_nostatic", *INSTALLED_APPS]  # noqa: F405
 
 # django-debug-toolbar
 # ------------------------------------------------------------------------------
@@ -46,6 +47,7 @@ MIDDLEWARE += ["debug_toolbar.middleware.DebugToolbarMiddleware"]  # noqa: F405
 DEBUG_TOOLBAR_CONFIG = {
     "DISABLE_PANELS": [
         "debug_toolbar.panels.redirects.RedirectsPanel",
+        # https://github.com/jazzband/django-debug-toolbar/issues/1875
         "debug_toolbar.panels.profiling.ProfilingPanel"
     ],
     "SHOW_TEMPLATE_CONTEXT": True,
@@ -68,5 +70,6 @@ INSTALLED_APPS += ["django_extensions"]  # noqa: F405
 # Your stuff...
 # ------------------------------------------------------------------------------
 # CORS NGINX
-CSRF_TRUSTED_ORIGINS = ["http://localhost:8080"]
+CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:8080", "http://localhost:8080"]
+# print(f"CSRF_TRUSTED_ORIGINS --> {CSRF_TRUSTED_ORIGINS}")
 

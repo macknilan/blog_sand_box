@@ -60,9 +60,8 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
   && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
   && rm -rf /var/lib/apt/lists/*
 
-# All absolute dir copies ignore workdir instruction.
-# All relative dir copies are wrt to the workdir instruction
-# copy python dependency wheels from python-build-stage
+# Copy the Python dependency `wheels` from the `python-build-stage` to the `/wheels` directory in the current stage.
+# This allows us to install the Python dependencies in the current stage using these precompiled `wheels` files.
 COPY --from=python-build-stage /usr/src/app/wheels  /wheels/
 
 # USE WHEELS TO INSTALL PYTHON DEPENDENCIES

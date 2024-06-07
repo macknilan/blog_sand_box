@@ -1,6 +1,6 @@
 FROM docker.io/postgres:16
 
-# Copiar el directorio 'mantenimiento' del directorio local 'docker/local/postgres'
+# Copiar el directorio 'maintenance' del directorio local 'docker/local/postgres'
 # al directorio '/usr/local/bin/maintenance' en la imagen.
 # Este directorio contiene scripts que se utilizan para tareas de mantenimiento de bases de datos.
 COPY ./docker/local/postgres/maintenance /usr/local/bin/maintenance

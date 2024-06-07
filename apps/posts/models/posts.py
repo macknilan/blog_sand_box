@@ -9,6 +9,7 @@ from django.db import models
 from django.utils import timezone
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
+from martor.models import MartorField
 
 # Utilities
 from apps.utils.models import TimeStampedModel
@@ -26,16 +27,19 @@ class PostLet(models.Manager):
 
 
 def unique_slugify(instance, string_to_slugify):
-    slug_value = slugify(string_to_slugify)
+    """
+    GENERATE A UNIQUE SLUG FOR A MODEL INSTANCE.
+    """
+    _slug = slugify(string_to_slugify)
+    alphabet = "".join(secrets.choice(string.ascii_letters + string.digits + "-_") for i in range(31))
+    _slug_salt = f"{_slug}-{generate(alphabet, size=31)}"
     model = instance.__class__
+    qs_exists = model.objects.filter(id=instance.id).exists()
 
-    alphabet = "".join(secrets.choice(string.ascii_letters + string.digits + "-_") for i in range(21))
-
-    slug_value = slug_value + generate(alphabet, size=21)
-
-    if model.objects.filter(url=slug_value).exists():
-        slug_value = unique_slugify(instance,  slug_value)
-    return slug_value
+    if qs_exists:
+        return model.objects.filter(id=instance.id).values("url")[0]["url"]
+    else:
+        return _slug_salt
 
 
 class Post(TimeStampedModel):
@@ -50,12 +54,13 @@ class Post(TimeStampedModel):
         unique=True,
     )
     title = models.CharField(_("title"), max_length=255)
-    body = models.TextField()
+    # body = models.TextField()
+    body = MartorField()
     image = models.ImageField(_("post_image"), upload_to="post_image/", max_length=500, blank=True, null=True)
     is_draft = models.BooleanField(_("is_draft"), default=False)
     publish_date = models.DateTimeField(_("published_date"), auto_now=False, auto_now_add=False, null=True, blank=True)
-    url = models.SlugField(_("url slug"), max_length=255, null=True, blank=True, unique=True)  # unique=True
-    link = models.URLField(_("link"), max_length=500, null=True, blank=True)
+    url = models.SlugField(_("Url slug for link"), max_length=255, null=True, blank=True, unique=True)  # unique=True
+    # link = models.URLField(_("link"), max_length=500, null=True, blank=True)
     tags = models.ManyToManyField(Tag, verbose_name=_("tags for the post"))
     objects = models.Manager()  # The default manager
     published = PostLet()  # The Post Manager manager
@@ -91,5 +96,3 @@ class Post(TimeStampedModel):
         name_to_slugify = self.title
         self.url = unique_slugify(self, name_to_slugify)
         super(Post, self).save(*args, **kwargs)
-
-
