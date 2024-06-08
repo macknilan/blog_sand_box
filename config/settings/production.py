@@ -138,7 +138,7 @@ STORAGES = {
     "default": {
         "BACKEND": "storages.backends.s3.S3Storage",
         "OPTIONS": {
-            "location": "media",
+            "location": "blog_sand_box/media",
             "file_overwrite": False,
             "default_acl": "public-read",
         },
