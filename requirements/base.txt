@@ -27,5 +27,4 @@ django-cleanup==8.1.0 # https://github.com/un1t/django-cleanup
 pytz==2024.1  # https://pythonhosted.org/pytz
 django-taggit==5.0.1  # https://github.com/jazzband/django-taggit
 markdown==3.6  # https://github.com/Python-Markdown/markdown
-# martor==1.6.44  # https://github.com/agusmakmun/django-markdown-editor
 django-tinymce==4.0.0  # https://github.com/jazzband/django-tinymce
