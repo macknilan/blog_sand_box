@@ -40,7 +40,7 @@ SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool("DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS
 
 SECURE_CONTENT_TYPE_NOSNIFF = env.bool("DJANGO_SECURE_CONTENT_TYPE_NOSNIFF", default=True)
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 DEFAULT_FROM_EMAIL = env("DJANGO_DEFAULT_FROM_EMAIL", default="Mack")
 
@@ -143,16 +143,9 @@ STORAGES = {
             "default_acl": "public-read",
         },
     },
-    # "staticfiles": {
-    #     "BACKEND": "storages.backends.s3.S3Storage",
-    #     "OPTIONS": {
-    #         "location": "static",  # EL NOMBRE DE LA CARPETA EN S3
-    #         # PERMITE QUE LOS ARCHIVOS QUE SUBAMOS SEAN PÚBLICOS
-    #         # SI NO SE COLOCA, LOS ARCHIVOS SERÁN PRIVADOS
-    #         # Access Control List (ACL)
-    #         "default_acl": "public-read",
-    #     },
-    # },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"
+    },
 }
 MEDIA_URL = f"https://{aws_s3_domain}/media/"
 COLLECTFAST_STRATEGY = "collectfast.strategies.boto3.Boto3Strategy"
