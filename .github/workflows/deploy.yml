@@ -18,7 +18,7 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           SSH_HOST: ${{ secrets.SSH_HOST }}
-          SSH_USER: ${{ secreUSERN_HOSTS }}
+          SSH_USER: ${{ secrets.SSH_USER }}
         run: |
             mkdir -p ~/.ssh/
             echo "$SSH_PRIVATE_KEY" > ~/.ssh/git_to_vm_dig_oce
@@ -34,8 +34,3 @@ jobs:
       - name: Run deploy
         run: |
           ssh target "cd /app/ && docker compose -f production.yml down && git pull origin main && docker compose -f local.yml up --build -d --remove-orphans"
-
-
-
-
-
