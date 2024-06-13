@@ -15,5 +15,13 @@
       <jdbc-url>jdbc:postgresql://localhost:5432/blog_sand_box_db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="postgres_docker@prodhost" uuid="2bd84c5e-cb94-4998-ab29-77698ad82250">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <remarks>DB in docker prod</remarks>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://128.199.10.109:5432/blog_sand_box_db</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

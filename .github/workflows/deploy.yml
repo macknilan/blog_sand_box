@@ -1,0 +1,41 @@
+name: Continuous Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: main
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secreUSERN_HOSTS }}
+        run: |
+            mkdir -p ~/.ssh/
+            echo "$SSH_PRIVATE_KEY" > ~/.ssh/git_to_vm_dig_oce
+            chmod 600 ~/.ssh/git_to_vm_dig_oce
+            cat >> ~/.ssh/config << END
+            Host target
+                HostName $SSH_HOST
+                User $SSH_USER
+                IdentityFile ~/.ssh/git_to_vm_dig_oce
+                LogLevel ERROR
+                StrictHostKeyChecking no
+            END
+      - name: Run deploy
+        run: |
+          ssh target "cd /app/ && docker compose -f production.yml down && git pull origin main && docker compose -f local.yml up --build -d --remove-orphans"
+
+
+
+
+
