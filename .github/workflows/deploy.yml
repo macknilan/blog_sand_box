@@ -33,4 +33,4 @@ jobs:
             END
       - name: Run deploy
         run: |
-          ssh target "cd /app/ && docker compose -f production.yml down && git pull origin main && docker compose -f local.yml up --build -d --remove-orphans"
+          ssh target "cd /app/ && docker compose -f production.yml down && git pull origin main && docker compose -f production.yml up --build -d --remove-orphans"
