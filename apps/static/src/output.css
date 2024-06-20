@@ -1819,12 +1819,12 @@ input:checked + .toggle-bg {
   width: 100%;
 }
 
-.max-w-none {
-  max-width: none;
-}
-
 .max-w-screen-xl {
   max-width: 1280px;
+}
+
+.max-w-none {
+  max-width: none;
 }
 
 .flex-1 {
