@@ -9,9 +9,13 @@ from apps.users.models import Profile, User
 @admin.register(User)
 class UserAdmin(auth_admin.UserAdmin):
     """USER MODEL ADMIN."""
+
     fieldsets = (
         (None, {"fields": ("email", "password")}),
-        (_("Personal info"), {"fields": ("username", "first_name", "last_name", "phone_number")}),
+        (
+            _("Personal info"),
+            {"fields": ("username", "first_name", "last_name", "phone_number")},
+        ),
         (
             _("Permissions"),
             {
@@ -36,12 +40,9 @@ class UserAdmin(auth_admin.UserAdmin):
         "last_name",
         "email",
         "created_at",
-        "updated_at"
+        "updated_at",
     ]
-    list_display_links = [
-        "id",
-        "username"
-    ]
+    list_display_links = ["id", "username"]
     search_fields = ["username", "email"]
 
 
@@ -51,7 +52,8 @@ class UserProfile(admin.ModelAdmin):
 
     def username(self, obj):
         return obj.user.username
-    username.short_description = 'Username'
+
+    username.short_description = "Username"
 
     list_display = [
         "username",

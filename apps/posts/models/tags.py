@@ -1,4 +1,4 @@
-""" MODEL TAGS FOR THE BLOG """
+"""MODEL TAGS FOR THE BLOG"""
 
 from django.db import models
 from django.utils.text import slugify
@@ -12,15 +12,15 @@ class Tag(TimeStampedModel):
     """Tag model."""
 
     name = models.CharField(_("name"), max_length=20)
-    slug = models.SlugField(_("slug"), max_length=20, unique=True, null=True, blank=True)
+    slug = models.SlugField(
+        _("slug"), max_length=20, unique=True, null=True, blank=True
+    )
     image = models.FileField(_("image"), upload_to="icons/", null=True, blank=True)
 
     class Meta(TimeStampedModel.Meta):
         """Overwrite meta class of TimeStampedModel"""
 
-        ordering = [
-            "-created_at"
-        ]
+        ordering = ["-created_at"]
         db_table = "tag_info"
 
     def __str__(self):
@@ -30,9 +30,3 @@ class Tag(TimeStampedModel):
     def save(self, *args, **kwargs):
         self.url = slugify(self.name)
         super(Tag, self).save(*args, **kwargs)
-
-
-
-
-
-

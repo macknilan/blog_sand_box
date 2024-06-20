@@ -17,9 +17,6 @@ def post_detail_view(request, url):
     """
     post = get_object_or_404(Post, url=url)
 
-    context = {
-        "post": post
-    }
+    context = {"post": post}
 
     return render(request, "posts/post_detail.html", context)
-

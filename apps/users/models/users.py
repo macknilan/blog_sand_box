@@ -1,4 +1,5 @@
 """User model."""
+
 import uuid
 
 from django.contrib.auth.models import AbstractUser
@@ -23,6 +24,7 @@ class User(TimeStampedModel, AbstractUser):
     false until it is verified by mail, in development it is shown
     in console-log(cli) and in production you have to send an email.
     """
+
     id = models.UUIDField(
         _("id"),
         default=uuid.uuid4,
@@ -44,7 +46,9 @@ class User(TimeStampedModel, AbstractUser):
         message=_("Phone number must be entered in the format: +00 (000) 000-0000"),
     )
 
-    phone_number = models.CharField(validators=[phone_regex], max_length=20, blank=True, null=True)
+    phone_number = models.CharField(
+        validators=[phone_regex], max_length=20, blank=True, null=True
+    )
 
     # https://docs.djangoproject.com/en/4.1/topics/auth/customizing/#django.contrib.auth.models.CustomUser.USERNAME_FIELD
     USERNAME_FIELD = "email"
@@ -103,5 +107,3 @@ class User(TimeStampedModel, AbstractUser):
     def get_full_name(self):
         """Property for return full name."""
         return f"{self.first_name.title()} {self.last_name.title()}"
-
-

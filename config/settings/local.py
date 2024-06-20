@@ -28,7 +28,9 @@ CACHES = {
 # EMAIL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
-EMAIL_BACKEND = env("DJANGO_EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend")
+EMAIL_BACKEND = env(
+    "DJANGO_EMAIL_BACKEND", default="django.core.mail.backends.console.EmailBackend"
+)
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-port
 EMAIL_PORT = 1025
 
@@ -48,7 +50,7 @@ DEBUG_TOOLBAR_CONFIG = {
     "DISABLE_PANELS": [
         "debug_toolbar.panels.redirects.RedirectsPanel",
         # https://github.com/jazzband/django-debug-toolbar/issues/1875
-        "debug_toolbar.panels.profiling.ProfilingPanel"
+        "debug_toolbar.panels.profiling.ProfilingPanel",
     ],
     "SHOW_TEMPLATE_CONTEXT": True,
 }
@@ -72,4 +74,3 @@ INSTALLED_APPS += ["django_extensions"]  # noqa: F405
 # CORS NGINX
 CSRF_TRUSTED_ORIGINS = ["http://127.0.0.1:8080", "http://localhost:8080"]
 # print(f"CSRF_TRUSTED_ORIGINS --> {CSRF_TRUSTED_ORIGINS}")
-
