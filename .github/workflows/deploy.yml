@@ -43,6 +43,9 @@ jobs:
               # DISABLE THE CHECK FOR THE HOST KEY IN THE KNOWN HOSTS FILE
               StrictHostKeyChecking no
           END
+      - name: You are here
+        run: |
+          ssh target "pwd"
       - name: Run deploy
         run: |
           ssh target "cd /app/ && docker compose -f production.yml down && git pull origin main && docker compose -f production.yml up --build -d --remove-orphans"
