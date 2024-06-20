@@ -14,6 +14,6 @@
                 {% for tag in post.tags.all %}#{{ tag }}&nbsp;{% endfor %}
             </p>
         </div>
-        <article class="prose prose-my_color text-pretty">{{ post.body | safe }}</article>
+        <article class="max-w-none prose prose-my_color text-pretty">{{ post.body | safe }}</article>
     </div>
 {% endblock content_layout %}
