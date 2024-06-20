@@ -8,8 +8,11 @@ register = template.Library()
 @register.filter
 @stringfilter
 def render_markdown(value):
-    return markdown.markdown(value, extensions=[
-        "markdown.extensions.extra",
-        "markdown.extensions.codehilite",
-        "markdown.extensions.toc",
-    ])
+    return markdown.markdown(
+        value,
+        extensions=[
+            "markdown.extensions.extra",
+            "markdown.extensions.codehilite",
+            "markdown.extensions.toc",
+        ],
+    )

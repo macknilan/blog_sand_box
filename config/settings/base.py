@@ -63,7 +63,7 @@ LOCALE_PATHS = [str(BASE_DIR / "locale")]
 #         "USER": env("POSTGRES_USER"),
 #         "PASSWORD": env("POSTGRES_PASSWORD"),
 #         "HOST": env("POSTGRES_HOST"),
-#         "PORT": env("POSTGRES_PORT")
+#         "PORT": env("POSTGRES_PORT"),
 #     }
 # }
 
@@ -96,15 +96,9 @@ DJANGO_APPS = [
     "django.forms",
 ]
 
-THIRD_PARTY_APPS = [
-    "django_cleanup.apps.CleanupConfig",
-    "tinymce"
-]
+THIRD_PARTY_APPS = ["django_cleanup.apps.CleanupConfig", "tinymce"]
 
-LOCAL_APPS = [
-    "apps.users",
-    "apps.posts"
-]
+LOCAL_APPS = ["apps.users", "apps.posts"]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -144,7 +138,9 @@ PASSWORD_HASHERS = [
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-password-validators
 AUTH_PASSWORD_VALIDATORS = [
-    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    {
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
+    },
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
@@ -311,12 +307,3 @@ TINYMCE_DEFAULT_CONFIG = {
 }
 
 TINYMCE_COMPRESSOR = False
-
-
-
-
-
-
-
-
-

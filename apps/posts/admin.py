@@ -1,7 +1,7 @@
 """POST MODELS ADMIN."""
 
-from django.db import models
 from django.contrib import admin
+from django.db import models
 
 # Models
 from apps.posts.models import LikedPost, Post, Tag
@@ -11,9 +11,7 @@ from apps.posts.models import LikedPost, Post, Tag
 class PostAdmin(admin.ModelAdmin):
     """PROFILE MODEL ADMIN"""
 
-    readonly_fields = [
-        "url"
-    ]
+    readonly_fields = ["url"]
     list_display = [
         "id",
         "title",
@@ -42,7 +40,7 @@ class PostAdmin(admin.ModelAdmin):
     def short_body(self, obj):
         """RETURN THE FIRST 50 WORDS OF THE BODY FIELD."""
         words = obj.body.split()[:15]
-        return ' '.join(words) + '...' if len(words) > 15 else ' '.join(words)
+        return " ".join(words) + "..." if len(words) > 15 else " ".join(words)
 
 
 @admin.register(Tag)
@@ -82,9 +80,7 @@ class TagAdmin(admin.ModelAdmin):
         "created_at",
         "updated_at",
     ]
-    ordering = [
-        "-created_at"
-    ]
+    ordering = ["-created_at"]
     list_filter = [
         "created_at",
         "updated_at",
@@ -96,6 +92,7 @@ class LikedPostAdmin(admin.ModelAdmin):
     """
     LIKED POST MODEL ADMIN
     """
+
     list_display = [
         "id",
         "user",
@@ -131,6 +128,4 @@ class LikedPostAdmin(admin.ModelAdmin):
         "created_at",
         "updated_at",
     ]
-    ordering = [
-        "-created_at"
-    ]
+    ordering = ["-created_at"]

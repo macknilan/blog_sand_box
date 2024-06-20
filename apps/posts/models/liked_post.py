@@ -1,4 +1,4 @@
-""" MODEL LIKES FOR THE POSTS """
+"""MODEL LIKES FOR THE POSTS"""
 
 from django.conf import settings
 from django.db import models
@@ -18,25 +18,21 @@ class LikedPost(TimeStampedModel):
         Post,
         on_delete=models.CASCADE,
         related_name="liked_post",
-        verbose_name=_("post liked")
+        verbose_name=_("post liked"),
     )
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name="user_liked_post",
-        verbose_name=_("user who liked the post")
+        verbose_name=_("user who liked the post"),
     )
 
     class Meta(TimeStampedModel.Meta):
         """OVERWRITE META CLASS OF TIMESTAMPEDMODEL"""
 
-        ordering = [
-            "-created_at"
-        ]
+        ordering = ["-created_at"]
         db_table = "liked_post_info"
 
     def __str__(self):
         """RETURN NAME."""
         return f"{self.user.username} - {self.post.title[:30]}"
-
-
