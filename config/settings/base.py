@@ -5,31 +5,33 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 """
 
+import dj_database_url
 from pathlib import Path
+from collections import ChainMap
+from decouple import Config, RepositoryEnv
 
-import environ
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# BUILD PATHS INSIDE THE PROJECT LIKE THIS: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
-# share_photos
+# blog_sand_box
 
 APPS_DIR = BASE_DIR / "apps"
-env = environ.Env()
 
 print(f"BASE_DIR -> {BASE_DIR}")
 print(f"APPS_DIR -> {APPS_DIR}")
 
-READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=True)
-if READ_DOT_ENV_FILE:
-    # OS environment variables take precedence over variables from .env_OLD
-    env.read_env(str(BASE_DIR / ".envs/.local/.django"))
-    env.read_env(str(BASE_DIR / ".envs/.local/.postgres"))
+config = Config(
+    ChainMap(
+        RepositoryEnv(str(BASE_DIR / ".envs/.local/.django")
+        ),
+        RepositoryEnv(str(BASE_DIR / ".envs/.local/.postgres"))
+    )
+)
 
 # GENERAL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
 # DEBUG = True
-DEBUG = env.bool("DJANGO_DEBUG", False)
+DEBUG = config('DJANGO_DEBUG', default=False, cast=bool)
 # Local time zone. Choices are
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # though not all of them may be available with every OS.
@@ -59,17 +61,22 @@ LOCALE_PATHS = [str(BASE_DIR / "locale")]
 # DATABASES = {
 #     "default": {
 #         "ENGINE": "django.db.backends.postgresql",
-#         "NAME": env("POSTGRES_DB"),
-#         "USER": env("POSTGRES_USER"),
-#         "PASSWORD": env("POSTGRES_PASSWORD"),
-#         "HOST": env("POSTGRES_HOST"),
-#         "PORT": env("POSTGRES_PORT"),
+#         "NAME": config("POSTGRES_DB",),
+#         "USER": config("POSTGRES_USER",),
+#         "PASSWORD": config("POSTGRES_PASSWORD",),
+#         "HOST": config("POSTGRES_HOST",),
+#         "PORT": config("POSTGRES_PORT", cast=int),
 #     }
 # }
 
-DATABASES = {"default": env.db("DATABASE_URL")}
-
-DATABASES["default"]["ATOMIC_REQUESTS"] = True
+DATABASE_URL = {"default": config("DATABASE_URL", cast=str)}
+DATABASES = {
+        "default": dj_database_url.config(
+            default=DATABASE_URL,
+            conn_health_checks=True,
+        ),
+    }
+DATABASES['default']['ATOMIC_REQUESTS'] = True
 
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
@@ -225,17 +232,6 @@ SESSION_COOKIE_HTTPONLY = True
 CSRF_COOKIE_HTTPONLY = True
 # https://docs.djangoproject.com/en/dev/ref/settings/#x-frame-options
 X_FRAME_OPTIONS = "DENY"
-
-# EMAIL
-# ------------------------------------------------------------------------------
-# https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
-EMAIL_BACKEND = env(
-    "DJANGO_EMAIL_BACKEND",
-    default="django.core.mail.backends.smtp.EmailBackend",
-)
-# https://docs.djangoproject.com/en/dev/ref/settings/#email-timeout
-EMAIL_TIMEOUT = 5
-
 
 # ADMIN
 # ------------------------------------------------------------------------------

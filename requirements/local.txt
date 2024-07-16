@@ -1,10 +1,10 @@
--r production.txt
+-r base.txt
 
 Werkzeug[watchdog]==3.0.0 # https://github.com/pallets/werkzeug
 ipdb==0.13.13  # https://github.com/gotcha/ipdb
-# psycopg==3.1.19  # https://github.com/psycopg/psycopg
-# psycopg-binary==3.1.19  # https://github.com/psycopg/psycopg
-watchfiles==0.21.0  # https://github.com/samuelcolvin/watchfiles
+psycopg[binary]==3.2.1  # https://github.com/psycopg/psycopg
+dj-database-url==2.2.0  # https://github.com/jazzband/dj-database-url/
+watchfiles==0.22.0  # https://github.com/samuelcolvin/watchfiles
 
 # Testing
 # ------------------------------------------------------------------------------
@@ -26,7 +26,7 @@ sphinx-autobuild==2021.3.14 # https://github.com/GaretJax/sphinx-autobuild
 # ------------------------------------------------------------------------------
 # flake8==6.1.0  # https://github.com/PyCQA/flake8
 # flake8-isort==6.1.0  # https://github.com/gforcada/flake8-isort
-ruff==0.4.4  # pyup: < 0.2.0 # https://github.com/astral-sh/ruff
+ruff==0.5.1  # pyup: < 0.2.0 # https://github.com/astral-sh/ruff
 coverage==7.5.1  # https://github.com/nedbat/coveragepy
 # black==23.10.1  # https://github.com/psf/black
 djlint==1.34.1  # https://github.com/Riverside-Healthcare/djLint
@@ -36,7 +36,6 @@ pre-commit==3.5.0  # https://github.com/pre-commit/pre-commit
 
 # Django
 # ------------------------------------------------------------------------------
-django-debug-toolbar==4.2.0  # https://github.com/jazzband/django-debug-toolbar
+django-debug-toolbar==4.4.6  # https://github.com/jazzband/django-debug-toolbar
 django-extensions==3.2.3  # https://github.com/django-extensions/django-extensions
 django-coverage-plugin==3.1.0  # https://github.com/nedbat/django_coverage_plugin
-pytest-django==4.6.0  # https://github.com/pytest-dev/pytest-django

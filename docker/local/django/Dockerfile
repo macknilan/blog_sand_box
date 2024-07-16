@@ -52,7 +52,7 @@ RUN groupadd --gid 1000 dev-user \
 
 # INSTALAR DEPENDENCIAS DEL SISTEMA NECESARIAS
 RUN apt-get update && apt-get install --no-install-recommends -y \
-  # psycopg dependencies
+  # psycopg dependencies for PostgreSQL
   libpq-dev \
   # Translations dependencies
   gettext \

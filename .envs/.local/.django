@@ -2,7 +2,7 @@
 # ------------------------------------------------------------------------------
 DJANGO_DEBUG=True
 DJANGO_READ_DOT_ENV_FILE=True
-DJANGO_SECRET_KEY=django-insecure-0iw66+8hx33l7cr-d!u9g_np85w3n$+&s89dhnzosopxdzh=x*
+DJANGO_SECRET_KEY=v$te$nwxs^!&==$6b&_(fb70z@!da$o(c72)i4b9^@nf!$6+jy
 DJANGO_EMAIL_BACKEND=django.core.mail.backends.console.EmailBackend
 
 # USE_DOCKER=yes
